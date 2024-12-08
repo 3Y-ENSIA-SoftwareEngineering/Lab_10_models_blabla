@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $expense->add($title, $amount);
         
         // Redirect to the index page after adding
-        header("Location: /views/expenses/index.php");
+        header("Location: http://localhost/Lab_10_models_blabla/views/expenses/index.php");
         exit();
     } else {
         $error_message = "Please fill in both the title and amount fields correctly.";
@@ -50,6 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Add Expense</button>
     </form>
     
-    <a href="/views/expenses/index.php">Back to Expenses List</a>
+    <a href="http://localhost/Lab_10_models_blabla/views/expenses/index.php">Back to Expenses List</a>
 </body>
 </html>

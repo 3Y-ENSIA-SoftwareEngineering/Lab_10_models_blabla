@@ -1,27 +1,18 @@
 <?php
 // Get the module and action from the query string
-$module = $_GET['module'] ?? null;
-$action = $_GET['action'] ?? null;
+require_once __DIR__ . '/../../models/Expense.php';
+require_once __DIR__ . '/../../models/BaseModel.php';
 
-// Define the base directory for models
-$modelsDirectory = __DIR__ . '/../../models/';
 
-// Check if the requested module exists in the models directory
-if ($module && file_exists($modelsDirectory . ucfirst($module) . '.php')) {
-    require_once $modelsDirectory . ucfirst($module) . '.php'; // Load the model (e.g., Expense.php)
 
-    // Check if the requested action exists as a method in the model
-    if ($action && method_exists($module, $action)) {
-        // Call the action method (e.g., add())
-        $module::$action(); 
-    } else {
-        echo "Action '$action' not found in module '$module'.";
-    }
-} else {
-    echo "Module '$module' not found.";
-}
+// Initialize the data array
+$data = [
+    'expenses' => [] // Ensure expenses is an empty array by default
+];
+$expenseModel = new Expense();
+$data['expenses'] = $expenseModel->getAll(); // Call the instance method
 
-$data=[];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -31,14 +22,18 @@ $data=[];
 </head>
 <body>
     <h1>Expense Tracker</h1>
-    <a href="add.php?module=expense&action=add">Add Expense</a>
+    <a href="http://localhost/Lab_10_models_blabla/views/expenses/add.php?module=Expense&action=add">Add Expense</a>
     <ul>
-        <?php foreach ($data['expenses'] as $expense): ?>
-            <li>
-                <?= htmlspecialchars($expense['title']) ?> - $<?= htmlspecialchars($expense['amount']) ?>
-                <a href="?module=expense&action=delete&id=<?= $expense['id'] ?>">Delete</a>
-            </li>
-        <?php endforeach; ?>
+        <?php if (!empty($data['expenses'])): ?>
+            <?php foreach ($data['expenses'] as $expense): ?>
+                <li>
+                    <?= htmlspecialchars($expense['title']) ?> - $<?= htmlspecialchars($expense['amount']) ?>
+                    <a href="?module=expense&action=delete&id=<?= $expense['id'] ?>">Delete</a>
+                </li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No expenses found.</p>
+        <?php endif; ?>
     </ul>
 </body>
 </html>

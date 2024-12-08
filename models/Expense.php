@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/BaseModel.php'; 
 class Expense extends Model {
-    public function getAll() {
+    public  function getAll() {
         $stmt = $this->db->prepare("SELECT * FROM expenses ORDER BY created_at DESC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
