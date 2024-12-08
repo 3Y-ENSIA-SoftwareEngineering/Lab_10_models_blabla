@@ -24,8 +24,7 @@ class CategoryController extends Controller {
 
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $model->update($id, $_POST['name']); 
-            header('location: /categories');
-
+           
         } else {
             // fetch the current category details
             $category = $model->getById($id);
@@ -35,9 +34,9 @@ class CategoryController extends Controller {
 
     // delete a category
     public function deleteCategory($id){
-        $model = $this->loadModel('Category'); // load the category model
+        $model = $this->loadModel('category'); // load the category model
         $model->delete($id); // use the id to delete
-        header('location: /categories');
+        header('location: /');
     }
 
 }

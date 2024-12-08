@@ -8,7 +8,7 @@ class Category extends Model {
      * @return array
      */
     public function getAll() {
-        $stmt = $this->db->prepare("SELECT * FROM categories ORDER BY created_at DESC");
+        $stmt = $this->db->prepare("SELECT * FROM Category ");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -19,7 +19,7 @@ class Category extends Model {
      * @param string $name
      */
     public function add($name) {
-        $stmt = $this->db->prepare("INSERT INTO categories (name) VALUES (:name)");
+        $stmt = $this->db->prepare("INSERT INTO Category  (name) VALUES (:name)");
         $stmt->bindParam(':name', $name);
         $stmt->execute();
     }
@@ -31,7 +31,7 @@ class Category extends Model {
      * @param string $name
      */
     public function update($id, $name) {
-        $stmt = $this->db->prepare("UPDATE categories SET name = :name WHERE id = :id");
+        $stmt = $this->db->prepare("UPDATE Category  SET name = :name WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':name', $name);
         $stmt->execute();
@@ -43,7 +43,7 @@ class Category extends Model {
      * @param int $id
      */
     public function delete($id) {
-        $stmt = $this->db->prepare("DELETE FROM categories WHERE id = :id");
+        $stmt = $this->db->prepare("DELETE FROM Category  WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
     }

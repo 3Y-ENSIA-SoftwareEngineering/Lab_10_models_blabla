@@ -27,7 +27,7 @@ if (file_exists($modelsDirectory . 'Category.php')) {
 <body>
     <h1>Manage Categories</h1>
     
-    <a href="add_category.php">Add New Category</a>
+    <a href="http://localhost/Lab_10_models_blabla/views/expenses/add_categories.php">Add New Category</a>
 
     <h2>Categories List</h2>
     <ul>

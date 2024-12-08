@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <!-- Form for adding a category -->
-    <form method="POST" action="add_category.php">
+    <form method="POST" action="http://localhost/Lab_10_models_blabla/views/expenses/add_categories.php">
         <label for="name">Category Name:</label>
         <input type="text" id="name" name="name" required>
         
         <button type="submit">Add Category</button>
     </form>
     
-    <a href="categories.php">Back to Categories List</a>
+    <a href="http://localhost/Lab_10_models_blabla/views/expenses/categories.php">Back to Categories List</a>
 </body>
 </html>
