@@ -14,6 +14,9 @@ $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
     $category = mysqli_real_escape_string($conn, $_POST['category']);
+    if ($category == 'Other') {
+        $category = mysqli_real_escape_string($conn, $_POST['other_category']);
+    }
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $amount = floatval($_POST['amount']);
     $date = $_POST['date'];
@@ -106,6 +109,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #721c24;
         }
     </style>
+ <script>
+        function toggleOtherCategory() {
+            const categorySelect = document.getElementById("category");
+            const otherCategoryInput = document.getElementById("otherCategoryInput");
+            if (categorySelect.value === "Other") {
+                otherCategoryInput.style.display = "block";
+            } else {
+                otherCategoryInput.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
     
@@ -123,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="POST">
                 <div class="form-group">
                     <label for="category">Category</label>
-                    <select name="category" id="category" required>
+                    <select name="category" id="category" required onchange="toggleOtherCategory()">
                         <option value="">Select Category</option>
                         <option value="Food">Food</option>
                         <option value="Transport">Transport</option>
@@ -131,6 +145,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="Bills">Bills</option>
                         <option value="Other">Other</option>
                     </select>
+                </div>
+                <!-- Input for custom category when "Other" is selected -->
+                <div class="form-group" id="otherCategoryInput" style="display: none;">
+                    <label for="other_category">Enter Custom Category</label>
+                    <input type="text" id="other_category" name="other_category" placeholder="Enter custom category" />
                 </div>
                 
                 <div class="form-group">
@@ -148,7 +167,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="date" id="date" name="date" required value="<?php echo date('Y-m-d'); ?>">
                 </div>
                 
-                <button type="submit">Add Expense</button>
+                
+                <!-- <div style="display: flex; justify-content: center; align-items: center;">
+    <form action="home.php?page=list_expenses" method="post">
+        <a href="home.php?page=list_expenses">
+        <button type="submit" 
+                style="text-decoration: none; background-color: #f06292; color: white; border: none; 
+                       padding: 10px 20px; text-align: center; border-radius: 5px; cursor: pointer; 
+                       display: block; width: 80%;">
+            Add Expense
+        </button>
+        </a>
+    </form>
+    </div> -->
+
+            
+
+
+    <div style="display: flex; justify-content: center; align-items: center">
+    <a href="home.php?page=list_expenses" 
+       style="text-decoration: none; background-color: #f06292; color: white; border: none; 
+              padding: 10px 20px; text-align: center; border-radius: 5px; cursor: pointer; 
+              display: block; width: 80%;">
+              <button type="submit" style="background-color:#f06292;"> Add Expense</button>
+       
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
             </form>
         </div>
     </div>

@@ -119,6 +119,7 @@ $stmt->bind_param("iii", $expense_id, $user_id, $shared_user_id);
             background-color: #ff69b4; /* Slightly lighter pink on hover */
         }
 
+
         .message {
             margin-top: 20px;
             padding: 10px;
@@ -135,20 +136,35 @@ $stmt->bind_param("iii", $expense_id, $user_id, $shared_user_id);
             background-color: #f8d7da; /* Light red for error */
             color: #721c24;
         }
+         
     </style>
 </head>
 <body>
+
     <div class="container">
         <h1>Share Expense</h1>
         <p><strong>Expense:</strong> <?php echo htmlspecialchars($expense['title']); ?> ($<?php echo number_format($expense['amount'], 2); ?>)</p>
 
         <form method="POST">
             <div class="form-group">
-                <label for="username">Enter Username to Share With:</label>
+                <label for="username">Enter Email to Share With:</label>
                 <input type="text" id="username" name="username" required>
             </div>
 
-            <button type="submit">Share</button>
+
+
+
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+    <button type="submit" style="background-color: #f06292; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 80%; text-align: center;">
+        Share
+    </button>
+
+    <a href="home.php?page=shared_with" 
+       style="text-decoration: none; background-color: #f06292; color: white; padding: 10px 20px; text-align: center; border-radius: 5px; cursor: pointer; width: 80%; display: block;">
+        Return to Shared List
+    </a>
+</div>
+
         </form>
 
         <?php if ($message): ?>

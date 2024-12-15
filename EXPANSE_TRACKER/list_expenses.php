@@ -13,12 +13,46 @@ $user_id = $_SESSION['user_id'];
 
 // Handle Delete
 if (isset($_POST['delete'])) {
+    // Retrieve and sanitize the expense ID
     $expense_id = intval($_POST['expense_id']);
-    $sql = "DELETE FROM expenses WHERE id = ? AND user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $expense_id, $user_id);
-    $stmt->execute();
+
+    // Start a database transaction to ensure consistency
+    $conn->begin_transaction();
+
+    try {
+        // Check if the expense exists in the shared_expenses table
+        $check_sql = "SELECT COUNT(*) AS count FROM shared_expenses WHERE expense_id = ?";
+        $check_stmt = $conn->prepare($check_sql);
+        $check_stmt->bind_param("i", $expense_id);
+        $check_stmt->execute();
+        $check_result = $check_stmt->get_result();
+        $row = $check_result->fetch_assoc();
+
+        if ($row['count'] > 0) {
+            // Delete the expense from the shared_expenses table
+            $delete_shared_sql = "DELETE FROM shared_expenses WHERE expense_id = ?";
+            $delete_shared_stmt = $conn->prepare($delete_shared_sql);
+            $delete_shared_stmt->bind_param("i", $expense_id);
+            $delete_shared_stmt->execute();
+        }
+
+        // Delete the expense from the expenses table
+        $delete_expense_sql = "DELETE FROM expenses WHERE id = ? AND user_id = ?";
+        $delete_expense_stmt = $conn->prepare($delete_expense_sql);
+        $delete_expense_stmt->bind_param("ii", $expense_id, $user_id);
+        $delete_expense_stmt->execute();
+
+        // Commit the transaction
+        $conn->commit();
+
+        echo "Expense successfully deleted.";
+    } catch (Exception $e) {
+        // Rollback the transaction if any error occurs
+        $conn->rollback();
+        echo "An error occurred: " . $e->getMessage();
+    }
 }
+
 
 // Build filter query
 $where_conditions = ["user_id = ?"]; 
@@ -168,7 +202,7 @@ while ($row = $result->fetch_assoc()) {
                 <input type="date" name="start_date" value="<?php echo $_GET['start_date'] ?? ''; ?>" placeholder="Start Date">
                 <input type="date" name="end_date" value="<?php echo $_GET['end_date'] ?? ''; ?>" placeholder="End Date">
                 
-                <button type="submit" class="btn" style="background-color: #007bff; color: white;">Filter</button>
+                <button type="submit" class="btn" style="background-color: #f06292; color: white;">Filter</button>
             </form>
         </div>
 

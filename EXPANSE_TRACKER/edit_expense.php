@@ -122,13 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-<nav>
-        <span>Welcome, <?= htmlspecialchars($profile['full_name']) ?></span>
-        <a href="home.php?page=add_expense">Add Expense</a>
-        <a href="home.php?page=list_expenses">List Expenses</a>
-        <a href="home.php?page=shared_with">Shared With</a>
-        <a href="home.php?page=profile">Profile</a>
-    </nav>
+
 
     <div class="container">
         <div class="form-container">
@@ -168,7 +162,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="date" id="date" name="date" required value="<?php echo htmlspecialchars($expense['date']); ?>">
                 </div>
 
-                <button type="submit">Update Expense</button>
+
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <button type="submit" style="background-color: #f06292; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; width: 80%; text-align: center;" >Update Expense</button>
+
+                <a href="home.php?page=list_expenses" 
+       style="text-decoration: none; background-color: #f06292; color: white; padding: 10px 20px; text-align: center; border-radius: 5px; cursor: pointer; width: 80%; display: block;">
+        Return to Expenses list
+    </a>
+</div>
+
             </form>
         </div>
     </div>
