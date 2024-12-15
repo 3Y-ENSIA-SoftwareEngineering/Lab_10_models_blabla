@@ -90,8 +90,8 @@ $result = $conn->query($sql);
                     <th>Category</th>
                     <th>Date</th>
                     <th>Amount</th>
-                    <th>Shared With (Name)</th>
                     <th>Shared With (Email)</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -103,7 +103,7 @@ $result = $conn->query($sql);
                         <td><?= $row['date'] ?></td>
                         <td><?= $row['amount'] ?></td>
                         <td><?= htmlspecialchars($row['shared_with_name']) ?></td>
-                        <td><?= htmlspecialchars($row['shared_with_email']) ?></td>
+                        
                     </tr>
                 <?php endwhile; ?>
             </tbody>

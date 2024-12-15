@@ -1,5 +1,10 @@
 <?php
-require_once 'session.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// require_once 'session.php';
+
 $conn = new mysqli("localhost", "root", "", "expense_tracker");
 
 // Get the current user's ID
@@ -98,7 +103,7 @@ while ($row = $result->fetch_assoc()) {
     </style>
 </head>
 <body>
-    <?php include 'nav.php'; ?>
+
     
     <div class="container">
         <h1>Expenses Shared With Me</h1>
@@ -111,8 +116,8 @@ while ($row = $result->fetch_assoc()) {
             <table class="shared-expenses-table">
                 <thead>
                     <tr>
-                        <th>Owner Name</th>
-                        <th>Owner Username</th>
+                        <th>Owner email</th>
+                       
                         <th>Category</th>
                         <th>Title</th>
                         <th>Amount</th>
@@ -123,7 +128,7 @@ while ($row = $result->fetch_assoc()) {
                     <?php foreach ($shared_expenses as $expense): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($expense['owner_name'] ?? 'N/A'); ?></td>
-                        <td><?php echo htmlspecialchars($expense['owner_username']); ?></td>
+                        
                         <td><?php echo htmlspecialchars($expense['category']); ?></td>
                         <td><?php echo htmlspecialchars($expense['title']); ?></td>
                         <td>$<?php echo number_format($expense['amount'], 2); ?></td>

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $conn = new mysqli("localhost", "root", "", "expense_tracker");
 
 if (!isset($_SESSION['user_id'])) {
@@ -106,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <?php include 'nav.php'; ?>
+    
     
     <div class="container">
         <div class="form-container">
