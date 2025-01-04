@@ -1,8 +1,6 @@
 <?php
 class ExpenseController extends Controller {
 
-
-    
     public function index() {
         $model = $this->loadModel('Expense');
         $expenses = $model->getAll();
