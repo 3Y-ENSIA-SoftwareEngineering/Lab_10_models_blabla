@@ -25,7 +25,7 @@ if (!isset($_SESSION['user_id'])) {
 $current_user_id = $_SESSION['user_id'];
 
 // Fetch shared expenses using the controller
-$shared_expenses = $controller->getSharedExpenses($current_user_id);
+$shared_expenses = $controller->getSharedWithExpenses($current_user_id);
 
 // Calculate totals
 $total_shared_expenses = array_sum(array_column($shared_expenses, 'amount'));
